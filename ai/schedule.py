@@ -491,7 +491,7 @@ def _format_date(value):
     return None
 
 
-def generate_telegram_message(tasks):
+def generate_telegram_message(tasks, daily_limit=None):
     """Generate an AI-crafted Telegram message for study reminders"""
     logger.info(f"💬 generate_telegram_message() called with {len(tasks)} tasks")
     load_env()
@@ -518,7 +518,10 @@ def generate_telegram_message(tasks):
         else:
             task_lines.append(f"• {title}: {duration}h, deadline {deadline}, reminder {reminder}")
 
-    prompt = TELEGRAM_MESSAGE_PROMPT + "\n\nStudent's Tasks:\n" + "\n".join(task_lines)
+    prompt = TELEGRAM_MESSAGE_PROMPT
+    if daily_limit is not None:
+        prompt += f"\nNote: The student has set a daily study limit of {daily_limit} hours."
+    prompt += "\n\nStudent's Tasks:\n" + "\n".join(task_lines)
 
     endpoint = f"{get_ollama_host()}/v1/chat/completions" if provider == "ollama" else "https://api.groq.com/v1/chat/completions"
     logger.debug(f"Calling AI API endpoint: {endpoint}")

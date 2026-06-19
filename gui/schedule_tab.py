@@ -4,7 +4,6 @@ from tkinter import ttk, messagebox
 from ai.schedule import LOG_FILE, generate_schedule, generate_telegram_message
 from export.csv_export import export_schedule_csv
 from reminders.telegram import send_telegram_message
-from reminders.telegram import send_ai_generated_schedule_to_telegram
 
 class ScheduleTab:
     def __init__(self, notebook, db, calendar_tab):
@@ -148,10 +147,7 @@ class ScheduleTab:
         failed = []
         for chat_id in chat_ids:
             try:
-                tasks = self.db.get_all_tasks()  # or filtered tasks
-                send_ai_generated_schedule_to_telegram(chat_id, tasks)
-                # Show success message
-                messagebox.showinfo("Success", "Schedule sent to Telegram!")
+                send_telegram_message(chat_id, message_text)
             except Exception as exc:
                 failed.append(f"{chat_id}: {exc}")
 

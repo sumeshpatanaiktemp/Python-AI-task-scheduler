@@ -134,13 +134,14 @@ def get_telegram_message_text(schedule_rows):
 from ai.schedule import generate_telegram_message
 
 
-def send_ai_generated_schedule_to_telegram(chat_id: str, tasks, timeout: int = 45):
+def send_ai_generated_schedule_to_telegram(chat_id: str, tasks, daily_limit=None, timeout: int = 45):
     """
     Generate AI schedule message and send to Telegram.
     
     Args:
         chat_id: Telegram chat ID (must be numeric)
         tasks: List of task dictionaries
+        daily_limit: Optional daily study limit in hours
         timeout: Timeout in seconds (default 45)
     
     Returns:
@@ -172,12 +173,12 @@ def send_ai_generated_schedule_to_telegram(chat_id: str, tasks, timeout: int = 4
     if not token:
         logger.error("✗ Telegram bot token missing from .env file")
         raise RuntimeError("Telegram bot token missing from .env file")
-
+ 
     logger.info(f"Generating AI message for chat_id: {chat_id}...")
     
     try:
         # Generate AI-crafted message from tasks
-        message = generate_telegram_message(tasks)
+        message = generate_telegram_message(tasks, daily_limit=daily_limit)
         logger.debug(f"✓ AI message generated ({len(message)} characters)")
         
         # Send to Telegram with timeout handling

@@ -242,3 +242,60 @@ RESPONSE:
   }
 }
 ---
+2026-06-19 16:48:15,241 - DEBUG - AI Provider: ollama, Model: llama3
+2026-06-19 16:48:15,242 - DEBUG - Calling AI API endpoint: http://127.0.0.1:11434/v1/chat/completions
+[2026-06-19T16:49:02.304848] telegram_message
+PROMPT:
+You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.
+Use these tasks to generate a friendly, encouraging message that will help the student stay focused.
+Include:
+- A warm greeting
+- Task summary with deadlines
+- Motivational tips
+- Use emojis to make it visually appealing
+- Keep it concise but friendly
+
+Format it as a Telegram message (plain text, no markdown).
+DO NOT include any JSON, code blocks, or technical formatting.
+Note: The student has set a daily study limit of 6.0 hours.
+
+Student's Tasks:
+• os ch 2: 4.0h, deadline 2026-06-19, reminder 16:17
+• read hindi: 2.0h, deadline 2026-06-19, reminder 13:15. study chapter 1
+• OS study: 3.0h, deadline 2026-06-19, reminder 15:21
+PAYLOAD:
+{
+  "model": "llama3",
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.\nUse these tasks to generate a friendly, encouraging message that will help the student stay focused.\nInclude:\n- A warm greeting\n- Task summary with deadlines\n- Motivational tips\n- Use emojis to make it visually appealing\n- Keep it concise but friendly\n\nFormat it as a Telegram message (plain text, no markdown).\nDO NOT include any JSON, code blocks, or technical formatting.\nNote: The student has set a daily study limit of 6.0 hours.\n\nStudent's Tasks:\n\u2022 os ch 2: 4.0h, deadline 2026-06-19, reminder 16:17\n\u2022 read hindi: 2.0h, deadline 2026-06-19, reminder 13:15. study chapter 1\n\u2022 OS study: 3.0h, deadline 2026-06-19, reminder 15:21"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 500
+}
+RESPONSE:
+{
+  "id": "chatcmpl-469",
+  "object": "chat.completion",
+  "created": 1781867942,
+  "model": "llama3",
+  "system_fingerprint": "fp_ollama",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Hello there! \ud83d\udc4b It's time to tackle your tasks and crush those deadlines! \ud83c\udfc6 Here's a quick rundown of what you've got coming up:\n\n* Chapter 2 in OS: 4.0 hours by June 19th (don't forget the reminder at 16:17 \u23f0)\n* Hindi reading: 2.0 hours by June 19th (get ready for your 13:15 reminder \ud83d\udcc5 And don't forget to review chapter 1 afterwards!)\n* OS study session: 3.0 hours by June 19th (set that reminder at 15:21 \u23f0)\n\nRemember, you've got this! You're capable of staying focused and getting it all done within your daily limit of 6.0 hours \ud83d\udd52 Take breaks when needed, stay hydrated, and don't be too hard on yourself if you don't meet every single goal (but let's aim high, right? \ud83d\udcaa)\n\nYou've got this! Good luck, and happy studying! \ud83d\ude0a"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 211,
+    "completion_tokens": 213,
+    "total_tokens": 424
+  }
+}
+---
