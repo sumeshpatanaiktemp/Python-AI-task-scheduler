@@ -34,29 +34,30 @@ A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. M
 
 ```
 .
-├── app.py                 # Main Tkinter application
-├── main.py               # Entry point with server initialization
-├── requirements.txt      # Project dependencies
+├── app.py                   # Main Tkinter application
+├── main.py                  # Entry point with server initialization
+├── requirements.txt         # Project dependencies
+├── .env                     # api key and bot token
 ├── ai/
-│   ├── normalize.py      # Task normalization logic
-│   └── schedule.py       # AI schedule generation
+│   ├── normalize.py         # Task normalization logic
+│   └── schedule.py          # AI schedule generation
 ├── api/
-│   └── server.py         # Flask API server
+│   └── server.py            # Flask API server
 ├── database/
-│   ├── db.py            # Database manager
-│   └── schema.sql       # Database schema
+│   ├── db.py                # Database manager
+│   └── schema.sql           # Database schema
 ├── export/
-│   └── csv_export.py    # CSV export functionality
+│   └── csv_export.py        # CSV export functionality
 ├── gui/
-│   ├── calendar_tab.py  # Calendar interface
-│   ├── schedule_tab.py  # Schedule display and generation
-│   └── tasks_tab.py     # Task management interface
-├── logs/                # Application logs directory
+│   ├── calendar_tab.py      # Calendar interface
+│   ├── task_summary_tab.py  # Schedule display and generation
+│   └── tasks_tab.py         # Task management interface
+├── logs/                    # Application logs directory
 ├── reminders/
-│   ├── popup.py         # Desktop reminder notifications
-│   └── telegram.py      # Telegram integration
+│   ├── popup.py             # Desktop reminder notifications
+│   └── telegram.py          # Telegram integration
 └── utils/
-    └── env.py           # Environment configuration loader
+    └── env.py               # Environment configuration loader
 ```
 
 ## 🚀 Quick Start
@@ -250,7 +251,7 @@ This project is provided as-is for educational and personal use.
 - [ ] Advanced analytics dashboard
 - [ ] Integration with popular calendars (Google, Outlook)
 - [ ] Machine learning for personalized scheduling
-- [ ] Dark mode UI theme
+- [ ] Switchable UI theme
 - [ ] Multi-language support
 
 ---
