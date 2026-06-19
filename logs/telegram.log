@@ -10,3 +10,21 @@
 2026-06-19 17:04:01,105 - DEBUG - _send_message_async() called for chat_id: 6504221937
 2026-06-19 17:04:01,105 - DEBUG - _get_telegram_bot_class() called
 2026-06-19 17:04:03,507 - DEBUG - Sending message to Telegram (chat_id: 6504221937, message length: 773)
+2026-06-19 19:40:59,235 - INFO - send_telegram_message() called with chat_id: 6504221937, timeout: 45s
+2026-06-19 19:40:59,240 - DEBUG - Starting send to chat_id: 6504221937
+2026-06-19 19:40:59,240 - DEBUG - Running async message send with 45s timeout...
+2026-06-19 19:40:59,243 - DEBUG - _send_message_async() called for chat_id: 6504221937
+2026-06-19 19:40:59,243 - DEBUG - _get_telegram_bot_class() called
+2026-06-19 19:41:01,057 - DEBUG - Sending message to Telegram (chat_id: 6504221937, message length: 758)
+2026-06-19 19:47:37,018 - INFO - send_telegram_message() called with chat_id: 6504221937, timeout: 45s
+2026-06-19 19:47:37,021 - DEBUG - Starting send to chat_id: 6504221937
+2026-06-19 19:47:37,021 - DEBUG - Running async message send with 45s timeout...
+2026-06-19 19:47:37,022 - DEBUG - _send_message_async() called for chat_id: 6504221937
+2026-06-19 19:47:37,022 - DEBUG - _get_telegram_bot_class() called
+2026-06-19 19:47:38,623 - DEBUG - Sending message to Telegram (chat_id: 6504221937, message length: 644)
+2026-06-19 21:20:34,557 - INFO - send_telegram_message() called with chat_id: 6504221937, timeout: 45s
+2026-06-19 21:20:34,561 - DEBUG - Starting send to chat_id: 6504221937
+2026-06-19 21:20:34,561 - DEBUG - Running async message send with 45s timeout...
+2026-06-19 21:20:34,562 - DEBUG - _send_message_async() called for chat_id: 6504221937
+2026-06-19 21:20:34,562 - DEBUG - _get_telegram_bot_class() called
+2026-06-19 21:20:36,402 - DEBUG - Sending message to Telegram (chat_id: 6504221937, message length: 619)

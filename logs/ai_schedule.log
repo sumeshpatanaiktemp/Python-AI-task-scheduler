@@ -361,3 +361,226 @@ RESPONSE:
   }
 }
 ---
+2026-06-19 19:39:50,199 - DEBUG - AI Provider: ollama, Model: llama3
+2026-06-19 19:39:50,200 - DEBUG - Calling AI API endpoint: http://127.0.0.1:11434/v1/chat/completions
+[2026-06-19T19:40:42.359914] telegram_message
+PROMPT:
+You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.
+Use these tasks to generate a friendly, encouraging message that will help the student stay focused.
+Include:
+- A warm greeting
+- Task summary with deadlines
+- Motivational tips
+- Use emojis to make it visually appealing
+- Keep it concise but friendly
+
+Format it as a Telegram message (plain text, no markdown).
+DO NOT include any JSON, code blocks, or technical formatting.
+Note: The student has set a daily study limit of 6.0 hours.
+
+Student's Tasks:
+• os ch 2: 4.0h, deadline 2026-06-19, reminder 16:17
+• read hindi: 2.0h, deadline 2026-06-19, reminder 13:15. study chapter 1
+• OS study: 3.0h, deadline 2026-06-19, reminder 15:21
+PAYLOAD:
+{
+  "model": "llama3",
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.\nUse these tasks to generate a friendly, encouraging message that will help the student stay focused.\nInclude:\n- A warm greeting\n- Task summary with deadlines\n- Motivational tips\n- Use emojis to make it visually appealing\n- Keep it concise but friendly\n\nFormat it as a Telegram message (plain text, no markdown).\nDO NOT include any JSON, code blocks, or technical formatting.\nNote: The student has set a daily study limit of 6.0 hours.\n\nStudent's Tasks:\n\u2022 os ch 2: 4.0h, deadline 2026-06-19, reminder 16:17\n\u2022 read hindi: 2.0h, deadline 2026-06-19, reminder 13:15. study chapter 1\n\u2022 OS study: 3.0h, deadline 2026-06-19, reminder 15:21"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 500
+}
+RESPONSE:
+{
+  "id": "chatcmpl-621",
+  "object": "chat.completion",
+  "created": 1781878242,
+  "model": "llama3",
+  "system_fingerprint": "fp_ollama",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Here's a friendly and engaging Telegram message for the student:\n\n\"Hey there! \ud83d\udc4b Hope you're having an amazing day! \ud83c\udf1e Just wanted to check in with your study schedule for today. You've got a solid plan laid out, and I'm excited to help you stay on track! \ud83d\udcaa Here are your tasks for the day: \n\n* OS ch 2 - 4 hours, deadline June 19th, reminder at 16:17 \ud83d\udd52\n* Read Hindi - 2 hours, deadline June 19th, reminder at 13:15 \u23f0 and don't forget to study chapter 1 too! \ud83d\udcd6\n* OS study - 3 hours, deadline June 19th, reminder at 15:21 \ud83d\udd25\n\nRemember, you've got this! You're dedicating a total of 6 hours today, which is awesome! \ud83d\udcaa Stay focused, stay motivated, and don't forget to take breaks in between. You're doing great, and I'm rooting for you all the way! \ud83c\udf89 Keep it up!\""
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 211,
+    "completion_tokens": 223,
+    "total_tokens": 434
+  }
+}
+---
+2026-06-19 19:46:29,711 - DEBUG - AI Provider: ollama, Model: llama3
+2026-06-19 19:46:29,711 - DEBUG - Calling AI API endpoint: http://127.0.0.1:11434/v1/chat/completions
+[2026-06-19T19:47:01.870935] telegram_message
+PROMPT:
+You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.
+Use these tasks to generate a friendly, encouraging message that will help the student stay focused.
+Include:
+- A warm greeting
+- Task summary with deadlines
+- Motivational tips
+- Use emojis to make it visually appealing
+- Keep it concise but friendly
+
+Format it as a Telegram message (plain text, no markdown).
+DO NOT include any JSON, code blocks, or technical formatting.
+Note: The student has set a daily study limit of 6.0 hours.
+
+Student's Tasks:
+• Study OS: 3.0h, deadline 2026-06-19, reminder 11:45. read OS chap 1
+PAYLOAD:
+{
+  "model": "llama3",
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.\nUse these tasks to generate a friendly, encouraging message that will help the student stay focused.\nInclude:\n- A warm greeting\n- Task summary with deadlines\n- Motivational tips\n- Use emojis to make it visually appealing\n- Keep it concise but friendly\n\nFormat it as a Telegram message (plain text, no markdown).\nDO NOT include any JSON, code blocks, or technical formatting.\nNote: The student has set a daily study limit of 6.0 hours.\n\nStudent's Tasks:\n\u2022 Study OS: 3.0h, deadline 2026-06-19, reminder 11:45. read OS chap 1"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 500
+}
+RESPONSE:
+{
+  "id": "chatcmpl-518",
+  "object": "chat.completion",
+  "created": 1781878621,
+  "model": "llama3",
+  "system_fingerprint": "fp_ollama",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Hi there! \ud83d\udc4b I've got your daily study plan all lined up! \ud83d\udcc5 Here's what's on the agenda:\n\nYou have a total of 6 hours to dedicate to studying today, and here's how you can make the most of it:\n\n* Set aside 3 hours (from 11:45 am) to dive into OS chap 1. Don't forget to take breaks! \ud83d\ude0a\n* Make sure to finish your study session by June 19th, deadline for this task.\n\nTo stay focused and motivated, remember these tips:\n\ud83d\udd25 Stay hydrated and energized throughout the day!\n\ud83d\udcaa Take short breaks every hour to refresh your mind.\n\ud83d\udcca Keep track of your progress and celebrate small wins along the way!\n\nYou got this! \ud83d\udcaa Let's crush those study goals today! \ud83d\udc4d"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 160,
+    "completion_tokens": 171,
+    "total_tokens": 331
+  }
+}
+---
+2026-06-19 20:06:22,946 - DEBUG - AI Provider: ollama, Model: llama3
+2026-06-19 20:06:22,946 - DEBUG - Calling AI API endpoint: http://127.0.0.1:11434/v1/chat/completions
+[2026-06-19T20:06:55.280983] telegram_message
+PROMPT:
+You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.
+Use these tasks to generate a friendly, encouraging message that will help the student stay focused.
+Include:
+- A warm greeting
+- Task summary with deadlines
+- Motivational tips
+- Use emojis to make it visually appealing
+- Keep it concise but friendly
+
+Format it as a Telegram message (plain text, no markdown).
+DO NOT include any JSON, code blocks, or technical formatting.
+Note: The student has set a daily study limit of 6.0 hours.
+
+Student's Tasks:
+• os: 3.0h, deadline 2026-06-19, reminder 8:00
+• os study: 3.0h, deadline 2026-06-19, reminder 9:00. read os ch 1
+PAYLOAD:
+{
+  "model": "llama3",
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.\nUse these tasks to generate a friendly, encouraging message that will help the student stay focused.\nInclude:\n- A warm greeting\n- Task summary with deadlines\n- Motivational tips\n- Use emojis to make it visually appealing\n- Keep it concise but friendly\n\nFormat it as a Telegram message (plain text, no markdown).\nDO NOT include any JSON, code blocks, or technical formatting.\nNote: The student has set a daily study limit of 6.0 hours.\n\nStudent's Tasks:\n\u2022 os: 3.0h, deadline 2026-06-19, reminder 8:00\n\u2022 os study: 3.0h, deadline 2026-06-19, reminder 9:00. read os ch 1"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 500
+}
+RESPONSE:
+{
+  "id": "chatcmpl-557",
+  "object": "chat.completion",
+  "created": 1781879815,
+  "model": "llama3",
+  "system_fingerprint": "fp_ollama",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Hi there! \ud83c\udf1e\n\nHope you're having an amazing day! I'm excited to help you stay on top of your studies \ud83d\ude0a.\n\nHere's a quick recap of your tasks for today:\n\n* OS study: 3 hours, deadline June 19th (2026), reminder at 8:00 AM \u23f0\n* OS study: 3 hours, deadline June 19th (2026), reminder at 9:00 AM \u23f0\n\nRemember to take breaks and stay focused! You've got this \ud83d\ude0e. Here's a motivational tip:\n\n\"Small steps today, big progress tomorrow!\"\n\nDon't forget to read OS chapter 1 during your study session \ud83d\udcd6.\n\nYou're doing great! Keep it up \ud83d\udc4d. Remember, you can do 6 hours of studying today and still have time for other things \ud83d\udcaa.\n\nStay awesome! \ud83d\ude0a"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 184,
+    "completion_tokens": 182,
+    "total_tokens": 366
+  }
+}
+---
+2026-06-19 21:19:58,659 - DEBUG - AI Provider: ollama, Model: llama3
+2026-06-19 21:19:58,659 - DEBUG - Calling AI API endpoint: http://127.0.0.1:11434/v1/chat/completions
+[2026-06-19T21:20:30.736341] telegram_message
+PROMPT:
+You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.
+Use these tasks to generate a friendly, encouraging message that will help the student stay focused.
+Include:
+- A warm greeting
+- Task summary with deadlines
+- Motivational tips
+- Use emojis to make it visually appealing
+- Keep it concise but friendly
+
+Format it as a Telegram message (plain text, no markdown).
+DO NOT include any JSON, code blocks, or technical formatting.
+Note: The student has set a daily study limit of 7.5 hours.
+
+Student's Tasks:
+• os study: 3.0h, deadline 2026-06-19, reminder 9:00. read os ch 1
+PAYLOAD:
+{
+  "model": "llama3",
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.\nUse these tasks to generate a friendly, encouraging message that will help the student stay focused.\nInclude:\n- A warm greeting\n- Task summary with deadlines\n- Motivational tips\n- Use emojis to make it visually appealing\n- Keep it concise but friendly\n\nFormat it as a Telegram message (plain text, no markdown).\nDO NOT include any JSON, code blocks, or technical formatting.\nNote: The student has set a daily study limit of 7.5 hours.\n\nStudent's Tasks:\n\u2022 os study: 3.0h, deadline 2026-06-19, reminder 9:00. read os ch 1"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 500
+}
+RESPONSE:
+{
+  "id": "chatcmpl-313",
+  "object": "chat.completion",
+  "created": 1781884230,
+  "model": "llama3",
+  "system_fingerprint": "fp_ollama",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Hey there! \ud83d\udc4b\n\nJust wanted to check in and make sure you're on track for your tasks today! \ud83d\ude0a Here's a quick summary of what's due:\n\n* OS study: 3 hours, deadline June 19th, reminder at 9:00 AM - Remember to read chapter 1 by then!\n\nTo help you stay focused, here are some motivational tips:\n\n\ud83d\udcdd Break your study sessions into smaller chunks to stay motivated!\n\ud83d\udcaa Take a short break every hour to stretch and refresh your mind.\n\nAnd don't worry if it gets tough - you're already doing great! You've got this! \ud83d\udcaa\n\nRemember, 7.5 hours of study time is plenty today! Keep going, and you'll be crushing those tasks in no time! \ud83c\udf89"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 160,
+    "completion_tokens": 162,
+    "total_tokens": 322
+  }
+}
+---
