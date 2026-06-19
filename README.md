@@ -115,11 +115,11 @@ If you want this app to launch automatically when you log in, set up a Windows T
    - Program/script: `pythonw.exe`
    - Add arguments:
      ```text
-     "C:\Users\ASUS\Documents\STUDY\Python AI task scheduler\main.py"
+     "location\main.py"
      ```
    - Start in:
      ```text
-     C:\Users\ASUS\Documents\STUDY\Python AI task scheduler
+     location\Python AI task scheduler
      ```
 5. Optional: on the **General** tab, select `Run whether user is logged on or not`.
 
