@@ -2,11 +2,20 @@ import os
 import re
 import requests
 import json
+import logging
 from datetime import datetime, timedelta, time
 from utils.env import load_env, get_ai_provider, get_ai_api_key, get_ollama_host, get_ollama_model
 
 LOG_DIR = os.path.join(os.path.dirname(__file__), "..", "logs")
 LOG_FILE = os.path.join(LOG_DIR, "ai_schedule.log")
+
+# Setup console logging
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    logger.addHandler(console_handler)
+    logger.setLevel(logging.DEBUG)
 
 SCHEDULE_PROMPT = """Generate a 3-day schedule from these tasks. Max 6 hours/day. Return ONLY valid JSON with no explanation.
 Tasks: {normalized_tasks}
@@ -203,6 +212,7 @@ def _parse_week(value):
 
 
 def _local_schedule_fallback(tasks, daily_limit=6.0):
+    logger.debug(f"_local_schedule_fallback() called with {len(tasks)} tasks, daily_limit={daily_limit}h")
     today = datetime.today().date()
     days = [
         {
@@ -237,6 +247,8 @@ def _local_schedule_fallback(tasks, daily_limit=6.0):
         )
     )
 
+    logger.debug(f"Sorted {len(task_items)} tasks by deadline and duration")
+
     explanation_lines = []
     for item in task_items:
         assigned = False
@@ -268,6 +280,7 @@ def _local_schedule_fallback(tasks, daily_limit=6.0):
             day["current_datetime"] = end_datetime + timedelta(minutes=10)
             day["remaining"] -= item["duration"]
             assigned = True
+            logger.debug(f"Assigned task '{item['task']}' to day {days.index(day)+1}")
             break
 
         if not assigned:
@@ -289,10 +302,12 @@ def _local_schedule_fallback(tasks, daily_limit=6.0):
                     day["current_datetime"] = end_datetime + timedelta(minutes=10)
                     day["remaining"] -= item["duration"]
                     assigned = True
+                    logger.debug(f"Assigned task '{item['task']}' to fallback day {days.index(day)+1}")
                     break
 
     schedule = [{"day": i + 1, "blocks": day["blocks"]} for i, day in enumerate(days)]
     explanation = "\n".join(explanation_lines) if explanation_lines else "No tasks were scheduled."
+    logger.info(f"Schedule generated: {len(schedule)} days with {sum(len(s['blocks']) for s in schedule)} tasks scheduled")
     return {"schedule": schedule, "explanation": explanation}
 
 
@@ -340,12 +355,14 @@ def _parse_ai_result(response_data):
 
 
 def generate_schedule(tasks, daily_limit=6.0):
+    logger.info(f"generate_schedule() called with {len(tasks)} tasks")
     load_env()
     return _local_schedule_fallback(tasks, daily_limit=daily_limit)
 
 
 def _build_text_schedule(tasks, daily_limit=6.0):
     """Build a plain text schedule (fallback when AI is not called)"""
+    logger.debug(f"_build_text_schedule() called with {len(tasks)} tasks, daily_limit={daily_limit}h")
     today = datetime.today().date()
     task_items = []
     for task in tasks:
@@ -369,6 +386,7 @@ def _build_text_schedule(tasks, daily_limit=6.0):
         )
 
     task_items.sort(key=lambda item: (item["deadline_date"], item["reminder_time"] or time(0, 0), -item["duration"]))
+    logger.debug(f"Sorted {len(task_items)} tasks for text schedule")
 
     last_date = max(item["deadline_date"] for item in task_items) if task_items else today
     days = {}
@@ -415,6 +433,7 @@ def _build_text_schedule(tasks, daily_limit=6.0):
 
         if not assigned:
             unscheduled.append(item)
+            logger.debug(f"Task '{item['title']}' could not be scheduled")
 
     lines = ["Here is your study schedule based on deadlines and available time slots:"]
     for date in sorted(days.keys()):
@@ -439,6 +458,7 @@ def _build_text_schedule(tasks, daily_limit=6.0):
     if not any(days[date]["blocks"] for date in days):
         lines.append("No schedule could be created. Please add more time or adjust deadlines.")
 
+    logger.info(f"Text schedule built: {len([d for d in days.values() if d['blocks']])} days with tasks")
     return "\n".join(lines)
 
 
@@ -467,11 +487,16 @@ def _format_date(value):
 
 def generate_telegram_message(tasks):
     """Generate an AI-crafted Telegram message for study reminders"""
+    logger.info(f"generate_telegram_message() called with {len(tasks)} tasks")
     load_env()
     provider = get_ai_provider()
     model = get_ollama_model() if provider == "ollama" else "llama-3.1-7b"
     api_key = get_ai_api_key()
+    
+    logger.debug(f"AI Provider: {provider}, Model: {model}")
+    
     if provider != "ollama" and not api_key:
+        logger.error("AI API key not found")
         raise RuntimeError("AI API key not found")
 
     # Build task context for AI
@@ -490,6 +515,8 @@ def generate_telegram_message(tasks):
     prompt = TELEGRAM_MESSAGE_PROMPT + "\n\nStudent's Tasks:\n" + "\n".join(task_lines)
 
     endpoint = f"{get_ollama_host()}/v1/chat/completions" if provider == "ollama" else "https://api.groq.com/v1/chat/completions"
+    logger.debug(f"Calling AI API endpoint: {endpoint}")
+    
     headers = {"Content-Type": "application/json"}
     if provider != "ollama":
         headers["Authorization"] = f"Bearer {api_key}"
@@ -502,12 +529,28 @@ def generate_telegram_message(tasks):
     }
 
     try:
+        logger.info(f"Sending request to AI ({provider}) to generate Telegram message...")
         response = requests.post(endpoint, headers=headers, json=payload, timeout=(15, 180))
+        response.raise_for_status()
         data = response.json()
+        logger.info(f"✓ AI response received successfully (status: {response.status_code})")
         _write_ai_log("telegram_message", prompt, payload, response_data=data)
         message = _parse_ai_text_result(data)
+        logger.info(f"✓ Telegram message generated successfully ({len(message)} characters)")
         return message
+    except requests.exceptions.Timeout:
+        logger.error("AI API request timed out")
+        _write_ai_log("telegram_message_error", prompt, payload, exception="Request timeout")
+        fallback = [
+            "📚 Hey! Here's your study reminder:\n"
+        ]
+        for line in task_lines:
+            fallback.append(line)
+        fallback.append("\n✨ You've got this! Stay focused and consistent! 💪")
+        logger.warning("Using fallback message due to timeout")
+        return "\n".join(fallback)
     except Exception as exc:
+        logger.error(f"✗ Error generating Telegram message: {str(exc)}")
         _write_ai_log("telegram_message_error", prompt, payload, exception=exc)
         # Fallback: return formatted schedule
         fallback = [
@@ -516,4 +559,5 @@ def generate_telegram_message(tasks):
         for line in task_lines:
             fallback.append(line)
         fallback.append("\n✨ You've got this! Stay focused and consistent! 💪")
+        logger.warning("Using fallback message due to error")
         return "\n".join(fallback)
