@@ -31,6 +31,8 @@ A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. M
 - **Real-time Updates**: Instant feedback on task changes
 ## Demo
 
+[![Watch the video](https://img.youtube.com/vi/VT6eddrVVOA/maxresdefault.jpg)](https://youtu.be/VT6eddrVVOA)
+
 ## 📋 Project Structure
 
 ```
