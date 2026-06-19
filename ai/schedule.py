@@ -23,9 +23,6 @@ file_handler = logging.FileHandler(LOG_FILE)
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 logger.addHandler(file_handler)
 
-SCHEDULE_PROMPT = """Generate a 3-day schedule from these tasks. Max 6 hours/day. Return ONLY valid JSON with no explanation.
-Tasks: {normalized_tasks}
-Output: {{"schedule": [{{"day": 1, "blocks": []}}, {{"day": 2, "blocks": []}}, {{"day": 3, "blocks": []}}], "explanation": ""}}"""
 
 TELEGRAM_MESSAGE_PROMPT = """You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.
 Use these tasks to generate a friendly, encouraging message that will help the student stay focused.

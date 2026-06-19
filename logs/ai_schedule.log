@@ -299,3 +299,65 @@ RESPONSE:
   }
 }
 ---
+2026-06-19 17:03:13,918 - DEBUG - _local_schedule_fallback() called with 3 tasks, daily_limit=6.0h
+2026-06-19 17:03:13,926 - DEBUG - Sorted 3 tasks by deadline and duration
+2026-06-19 17:03:13,926 - DEBUG - Assigned task 'read hindi' to day 1
+2026-06-19 17:03:13,926 - DEBUG - Assigned task 'OS study' to day 1
+2026-06-19 17:03:13,926 - DEBUG - Assigned task 'os ch 2' to fallback day 2
+2026-06-19 17:03:18,358 - DEBUG - AI Provider: ollama, Model: llama3
+2026-06-19 17:03:18,358 - DEBUG - Calling AI API endpoint: http://127.0.0.1:11434/v1/chat/completions
+[2026-06-19T17:04:01.098557] telegram_message
+PROMPT:
+You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.
+Use these tasks to generate a friendly, encouraging message that will help the student stay focused.
+Include:
+- A warm greeting
+- Task summary with deadlines
+- Motivational tips
+- Use emojis to make it visually appealing
+- Keep it concise but friendly
+
+Format it as a Telegram message (plain text, no markdown).
+DO NOT include any JSON, code blocks, or technical formatting.
+Note: The student has set a daily study limit of 6.0 hours.
+
+Student's Tasks:
+• os ch 2: 4.0h, deadline 2026-06-19, reminder 16:17
+• read hindi: 2.0h, deadline 2026-06-19, reminder 13:15. study chapter 1
+• OS study: 3.0h, deadline 2026-06-19, reminder 15:21
+PAYLOAD:
+{
+  "model": "llama3",
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.\nUse these tasks to generate a friendly, encouraging message that will help the student stay focused.\nInclude:\n- A warm greeting\n- Task summary with deadlines\n- Motivational tips\n- Use emojis to make it visually appealing\n- Keep it concise but friendly\n\nFormat it as a Telegram message (plain text, no markdown).\nDO NOT include any JSON, code blocks, or technical formatting.\nNote: The student has set a daily study limit of 6.0 hours.\n\nStudent's Tasks:\n\u2022 os ch 2: 4.0h, deadline 2026-06-19, reminder 16:17\n\u2022 read hindi: 2.0h, deadline 2026-06-19, reminder 13:15. study chapter 1\n\u2022 OS study: 3.0h, deadline 2026-06-19, reminder 15:21"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 500
+}
+RESPONSE:
+{
+  "id": "chatcmpl-80",
+  "object": "chat.completion",
+  "created": 1781868841,
+  "model": "llama3",
+  "system_fingerprint": "fp_ollama",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Hey there! \ud83d\udc4b It's time to crush your study goals! \ud83c\udf89 Here's a quick recap of what you've got lined up for today:\n\n* OS ch 2: 4 hours by June 19th (deadline) and don't forget the reminder at 16:17 \u23f0\n* Read Hindi: 2 hours by June 19th (deadline) and study chapter 1 first! \ud83d\udcd6 Reminder is set for 13:15 \u23f0\n* OS Study: 3 hours by June 19th (deadline) with a reminder at 15:21 \u23f0\n\nRemember, you've got this! Stay focused and make the most of your daily study limit of 6 hours. \ud83d\udd52\ufe0f You're doing great!\n\nTips to stay motivated:\n\n\ud83d\udd25 Set small goals and reward yourself when you reach them!\n\ud83d\udca1 Take breaks and stretch (your mind and body) \ud83d\udc86\u200d\u2640\ufe0f\n\ud83d\udcca Review what you've learned so far and make connections to new material\n\nKeep shining, [Student's Name]! You're rocking this academic journey! \ud83c\udf89"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 211,
+    "completion_tokens": 234,
+    "total_tokens": 445
+  }
+}
+---

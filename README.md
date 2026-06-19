@@ -85,6 +85,7 @@ A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. M
    ```bash
    pip install -r requirements.txt
    ```
+   - This is recommended on first use(This is also included in `startup.bat`)
 
 4. **Configure environment variables** (optional)
    Create a `.env` file in the project root:
@@ -106,22 +107,14 @@ A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. M
    ```
 ## Run on Windows startup
 
-If you want this app to launch automatically when you log in, set up a Windows Task Scheduler task:
+If you want this app to launch automatically when you log in, set up a short cut in start up:
 
-1. Open **Task Scheduler**.
-2. Create a new task and name it `AI Task Scheduler`.
-3. On the **Triggers** tab, add a trigger: `At log on`.
-4. On the **Actions** tab, add an action: `Start a program`.
-   - Program/script: `pythonw.exe`
-   - Add arguments:
+1. press win+r.
+2. write: 
      ```text
-     "location\main.py"
+     shell:startup
      ```
-   - Start in:
-     ```text
-     location\Python AI task scheduler
-     ```
-5. Optional: on the **General** tab, select `Run whether user is logged on or not`.
+3. Create a shortcut of the `startup.bat`
 
 > Important: `main.py` opens a Tkinter GUI window, so the app will open visibly on startup. If you want it to start minimized or hidden, add that behavior inside the app or use a separate launcher.
 
@@ -154,6 +147,8 @@ If you want this app to launch automatically when you log in, set up a Windows T
 
 ### Using the REST API
 The application runs a Flask API server on `http://127.0.0.1:5000`
+
+- Note : This is not implemented yet fully please wait for future updates.
 
 **Available Endpoints:**
 - `GET /api/tasks` - Retrieve all tasks
