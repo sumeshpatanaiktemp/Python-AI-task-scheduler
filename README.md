@@ -104,6 +104,26 @@ A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. M
    ```bash
    python main.py
    ```
+## ðŸ‘¸ Run on Windows startup
+
+If you want this app to launch automatically when you log in, set up a Windows Task Scheduler task:
+
+1. Open **Task Scheduler**.
+2. Create a new task and name it `AI Task Scheduler`.
+3. On the **Triggers** tab, add a trigger: `At log on`.
+4. On the **Actions** tab, add an action: `Start a program`.
+   - Program/script: `pythonw.exe`
+   - Add arguments:
+     ```text
+     "C:\Users\ASUS\Documents\STUDY\Python AI task scheduler\main.py"
+     ```
+   - Start in:
+     ```text
+     C:\Users\ASUS\Documents\STUDY\Python AI task scheduler
+     ```
+5. Optional: on the **General** tab, select `Run whether user is logged on or not`.
+
+> Important: `main.py` opens a Tkinter GUI window, so the app will open visibly on startup. If you want it to start minimized or hidden, add that behavior inside the app or use a separate launcher.
 
 ## 📖 Usage Guide
 
