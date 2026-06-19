@@ -29,6 +29,7 @@ A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. M
 - **Tabbed Interface**: Organized sections for Calendar, Tasks, and Schedules
 - **Modern Design**: Clean, responsive interface built with ttk widgets
 - **Real-time Updates**: Instant feedback on task changes
+## Demo
 
 ## 📋 Project Structure
 
