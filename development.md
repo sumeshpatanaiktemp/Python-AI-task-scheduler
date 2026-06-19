@@ -31,7 +31,7 @@ The AI assistant generated the full project code and documentation for this repo
 - `ai/schedule.py`
 - `database/db.py`
 - `gui/calendar_tab.py`
-- `gui/schedule_tab.py`
+- `gui/task_summary_tab.py`
 - `gui/tasks_tab.py`
 - `reminders/popup.py`
 - `reminders/telegram.py`
