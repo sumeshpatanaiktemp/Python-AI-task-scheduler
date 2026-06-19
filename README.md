@@ -104,7 +104,7 @@ A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. M
    ```bash
    python main.py
    ```
-## ðŸ‘¸ Run on Windows startup
+## Run on Windows startup
 
 If you want this app to launch automatically when you log in, set up a Windows Task Scheduler task:
 
