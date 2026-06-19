@@ -1,0 +1,24 @@
+# GUI Components
+tkcalendar>=1.6.1
+python-dotenv>=1.0.0
+
+# Web Framework & API
+Flask>=3.0.0
+requests>=2.31.0
+
+# Notifications & Communication
+python-telegram-bot>=21.0
+
+# Build & Packaging
+pyinstaller>=6.0.0
+
+# Optional: Database drivers (if using external databases)
+# SQLAlchemy>=2.0.0
+
+# Optional: Production WSGI server
+# gunicorn>=21.0.0
+
+# Optional: Development dependencies
+# black>=23.0.0
+# flake8>=6.0.0
+# pytest>=7.0.0
