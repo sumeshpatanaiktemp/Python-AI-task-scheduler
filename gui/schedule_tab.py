@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox
 from ai.schedule import LOG_FILE, generate_schedule, generate_telegram_message
 from export.csv_export import export_schedule_csv
 from reminders.telegram import send_telegram_message
-
+from reminders.telegram import send_ai_generated_schedule_to_telegram
 
 class ScheduleTab:
     def __init__(self, notebook, db, calendar_tab):
@@ -32,7 +32,7 @@ class ScheduleTab:
         button_frame.pack(fill="x", pady=(0, 16))
         ttk.Button(button_frame, text="Generate 1 day tasks", command=self.generate_schedule).pack(side="left", padx=(0, 8))
         ttk.Button(button_frame, text="Export CSV", command=self.export_csv).pack(side="left", padx=8)
-        ttk.Button(button_frame, text="Get reminders", command=self.send_telegram_messages).pack(side="left", padx=8)
+        ttk.Button(button_frame, text="Send to Telegram", command=self.send_telegram_messages).pack(side="left", padx=8)
 
         schedule_frame = ttk.LabelFrame(self.frame, text="3-Day Time Blocks", style="Card.TLabelframe", padding=14)
         schedule_frame.pack(fill="both", expand=True, pady=(0, 12))
@@ -148,7 +148,10 @@ class ScheduleTab:
         failed = []
         for chat_id in chat_ids:
             try:
-                send_telegram_message(chat_id, message_text)
+                tasks = self.db.get_all_tasks()  # or filtered tasks
+                send_ai_generated_schedule_to_telegram(chat_id, tasks)
+                # Show success message
+                messagebox.showinfo("Success", "Schedule sent to Telegram!")
             except Exception as exc:
                 failed.append(f"{chat_id}: {exc}")
 

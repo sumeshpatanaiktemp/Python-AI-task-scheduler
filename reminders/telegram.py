@@ -47,6 +47,25 @@ def send_telegram_message(chat_id: str, message: str):
     result = bot.send_message(chat_id=chat_id, text=message)
     _run_async_if_needed(result)
 
+from ai.schedule import generate_telegram_message
+
+def send_ai_generated_schedule_to_telegram(chat_id: str, tasks):
+    """Generate AI schedule message and send to Telegram"""
+    load_env()
+    token = get_telegram_token()
+    if not token:
+        raise RuntimeError("Telegram bot token missing")
+    
+    # Generate AI-crafted message from tasks
+    message = generate_telegram_message(tasks)
+    
+    # Send to Telegram
+    Bot = _get_telegram_bot_class()
+    bot = Bot(token=token)
+    result = bot.send_message(chat_id=chat_id, text=message)
+    _run_async_if_needed(result)
+    
+    return message
 
 def send_schedule_to_chat_ids(schedule_rows):
     grouped = {}

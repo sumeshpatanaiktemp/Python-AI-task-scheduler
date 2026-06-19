@@ -12,8 +12,11 @@ SCHEDULE_PROMPT = """Generate a 3-day schedule from these tasks. Max 6 hours/day
 Tasks: {normalized_tasks}
 Output: {{"schedule": [{{"day": 1, "blocks": []}}, {{"day": 2, "blocks": []}}, {{"day": 3, "blocks": []}}], "explanation": ""}}"""
 
-TEXT_SCHEDULE_PROMPT = """You are a helpful student scheduler. Create a plain-text Telegram reminder message from these tasks. Use task title, duration, deadline, and reminder time. Do not return JSON or analysis. Make it concise and ready to send as a message."""
-
+TEXT_SCHEDULE_PROMPT = """You are a helpful student scheduler. Create a Telegram reminder message from these tasks. 
+Use task title, duration, deadline, and reminder time. 
+Format the message to be clear, concise, and motivational for a Telegram chat.
+Include emojis to make it visually appealing.
+Do not return [...] or any explanations - just the message text."""
 
 def _ensure_log_dir():
     os.makedirs(LOG_DIR, exist_ok=True)
