@@ -12,11 +12,17 @@ SCHEDULE_PROMPT = """Generate a 3-day schedule from these tasks. Max 6 hours/day
 Tasks: {normalized_tasks}
 Output: {{"schedule": [{{"day": 1, "blocks": []}}, {{"day": 2, "blocks": []}}, {{"day": 3, "blocks": []}}], "explanation": ""}}"""
 
-TEXT_SCHEDULE_PROMPT = """You are a helpful student scheduler. Create a Telegram reminder message from these tasks. 
-Use task title, duration, deadline, and reminder time. 
-Format the message to be clear, concise, and motivational for a Telegram chat.
-Include emojis to make it visually appealing.
-Do not return [...] or any explanations - just the message text."""
+TELEGRAM_MESSAGE_PROMPT = """You are a motivational student scheduler assistant. Create an engaging Telegram message for a student's study reminders.
+Use these tasks to generate a friendly, encouraging message that will help the student stay focused.
+Include:
+- A warm greeting
+- Task summary with deadlines
+- Motivational tips
+- Use emojis to make it visually appealing
+- Keep it concise but friendly
+
+Format it as a Telegram message (plain text, no markdown).
+DO NOT include any JSON, code blocks, or technical formatting."""
 
 def _ensure_log_dir():
     os.makedirs(LOG_DIR, exist_ok=True)
@@ -338,79 +344,8 @@ def generate_schedule(tasks, daily_limit=6.0):
     return _local_schedule_fallback(tasks, daily_limit=daily_limit)
 
 
-def generate_telegram_message(tasks):
-    load_env()
-    provider = get_ai_provider()
-    model = get_ollama_model() if provider == "ollama" else "llama-3.1-7b"
-    api_key = get_ai_api_key()
-    if provider != "ollama" and not api_key:
-        raise RuntimeError("AI API key not found")
-
-    task_lines = []
-    for task in tasks:
-        title = task.get("title", "Unnamed task")
-        duration = float(task.get("estimated_duration") or 1.0)
-        deadline = task.get("deadline_date") or task.get("deadline_week") or "no deadline"
-        reminder = task.get("reminder_time") or "no reminder time"
-        desc = task.get("description")
-        if desc:
-            task_lines.append(f"- {title}: {duration}h, deadline {deadline}, reminder {reminder}. {desc}")
-        else:
-            task_lines.append(f"- {title}: {duration}h, deadline {deadline}, reminder {reminder}.")
-
-    prompt = TEXT_SCHEDULE_PROMPT + "\n\nTasks:\n" + "\n".join(task_lines)
-
-    endpoint = f"{get_ollama_host()}/v1/chat/completions" if provider == "ollama" else "https://api.groq.com/v1/chat/completions"
-    headers = {"Content-Type": "application/json"}
-    if provider != "ollama":
-        headers["Authorization"] = f"Bearer {api_key}"
-
-    payload = {
-        "model": model,
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.3,
-        "max_tokens": 400,
-    }
-
-    try:
-        response = requests.post(endpoint, headers=headers, json=payload, timeout=(15, 180))
-        data = response.json()
-        _write_ai_log("response", prompt, payload, response_data=data)
-        return _parse_ai_text_result(data)
-    except Exception as exc:
-        _write_ai_log("error", prompt, payload, exception=exc)
-        fallback = [
-            f"Your study reminder:\n"
-        ]
-        for line in task_lines:
-            fallback.append(line)
-        return "\n".join(fallback)
-
-
-def _format_time(value):
-    if not value:
-        return None
-    if isinstance(value, time):
-        return value.strftime("%H:%M")
-    try:
-        parsed = _parse_time(str(value))
-        return parsed.strftime("%H:%M") if parsed else None
-    except Exception:
-        return None
-
-
-def _format_date(value):
-    if not value:
-        return None
-    if isinstance(value, datetime):
-        return value.date().isoformat()
-    if isinstance(value, str):
-        parsed = _parse_date(value)
-        return parsed.isoformat() if parsed else None
-    return None
-
-
 def _build_text_schedule(tasks, daily_limit=6.0):
+    """Build a plain text schedule (fallback when AI is not called)"""
     today = datetime.today().date()
     task_items = []
     for task in tasks:
@@ -507,5 +442,78 @@ def _build_text_schedule(tasks, daily_limit=6.0):
     return "\n".join(lines)
 
 
-def generate_telegram_message(tasks, daily_limit=6.0):
-    return _build_text_schedule(tasks, daily_limit=daily_limit)
+def _format_time(value):
+    if not value:
+        return None
+    if isinstance(value, time):
+        return value.strftime("%H:%M")
+    try:
+        parsed = _parse_time(str(value))
+        return parsed.strftime("%H:%M") if parsed else None
+    except Exception:
+        return None
+
+
+def _format_date(value):
+    if not value:
+        return None
+    if isinstance(value, datetime):
+        return value.date().isoformat()
+    if isinstance(value, str):
+        parsed = _parse_date(value)
+        return parsed.isoformat() if parsed else None
+    return None
+
+
+def generate_telegram_message(tasks):
+    """Generate an AI-crafted Telegram message for study reminders"""
+    load_env()
+    provider = get_ai_provider()
+    model = get_ollama_model() if provider == "ollama" else "llama-3.1-7b"
+    api_key = get_ai_api_key()
+    if provider != "ollama" and not api_key:
+        raise RuntimeError("AI API key not found")
+
+    # Build task context for AI
+    task_lines = []
+    for task in tasks:
+        title = task.get("title", "Unnamed task")
+        duration = float(task.get("estimated_duration") or 1.0)
+        deadline = task.get("deadline_date") or task.get("deadline_week") or "no deadline"
+        reminder = task.get("reminder_time") or "no reminder time"
+        desc = task.get("description")
+        if desc:
+            task_lines.append(f"• {title}: {duration}h, deadline {deadline}, reminder {reminder}. {desc}")
+        else:
+            task_lines.append(f"• {title}: {duration}h, deadline {deadline}, reminder {reminder}")
+
+    prompt = TELEGRAM_MESSAGE_PROMPT + "\n\nStudent's Tasks:\n" + "\n".join(task_lines)
+
+    endpoint = f"{get_ollama_host()}/v1/chat/completions" if provider == "ollama" else "https://api.groq.com/v1/chat/completions"
+    headers = {"Content-Type": "application/json"}
+    if provider != "ollama":
+        headers["Authorization"] = f"Bearer {api_key}"
+
+    payload = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.7,
+        "max_tokens": 500,
+    }
+
+    try:
+        response = requests.post(endpoint, headers=headers, json=payload, timeout=(15, 180))
+        data = response.json()
+        _write_ai_log("telegram_message", prompt, payload, response_data=data)
+        message = _parse_ai_text_result(data)
+        return message
+    except Exception as exc:
+        _write_ai_log("telegram_message_error", prompt, payload, exception=exc)
+        # Fallback: return formatted schedule
+        fallback = [
+            "📚 Hey! Here's your study reminder:\n"
+        ]
+        for line in task_lines:
+            fallback.append(line)
+        fallback.append("\n✨ You've got this! Stay focused and consistent! 💪")
+        return "\n".join(fallback)
