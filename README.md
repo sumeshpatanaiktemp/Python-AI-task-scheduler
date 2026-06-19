@@ -1,6 +1,6 @@
 # 🤖 AI Task Scheduler
 
-A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. Manage your study tasks, generate intelligent 3-day schedules, and receive Telegram reminders automatically.
+A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. Manage your study tasks, generate intelligent 1-day schedules, and receive Telegram reminders automatically.
 
 ## ✨ Features
 
@@ -10,7 +10,7 @@ A powerful AI-driven task scheduling application with a beautiful Tkinter GUI. M
 - **Smart Categorization**: Organize tasks with status tracking (pending, in-progress, completed)
 
 ### 🤖 AI-Powered Scheduling
-- **Intelligent Schedule Generation**: AI analyzes your tasks and creates optimized 3-day study blocks
+- **Intelligent Schedule Generation**: AI analyzes your tasks and creates optimized 1-day study blocks
 - **Multi-Provider Support**: Works with multiple AI providers (Ollama, OpenAI, etc.)
 - **Smart Load Balancing**: Automatically distributes tasks ensuring max 6 hours per day
 - **Task Normalization**: Intelligent preprocessing of task data for better scheduling
@@ -140,7 +140,7 @@ If you want this app to launch automatically when you log in, set up a Windows T
 ### Generating AI Schedule
 1. Switch to the **Schedule** tab
 2. Review your pending tasks
-3. Click "Generate 3-Day Schedule"
+3. Click "Generate 1-Day Schedule"
 4. AI will create an optimized study plan
 5. View breakdown by day and time blocks
 
