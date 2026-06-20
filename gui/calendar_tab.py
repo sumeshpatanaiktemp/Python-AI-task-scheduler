@@ -221,6 +221,16 @@ class CalendarTab:
                         task["deadline_date"], task["title"], "task")
                 except Exception:
                     pass
+        # Force calendar day cells to re-render so hours-used / hours-left update immediately
+        try:
+            # CustomCalendar implements both display methods; call whichever applies.
+            self.calendar._display_days_without_othermonthdays()
+        except Exception:
+            pass
+        try:
+            self.calendar._display_days_with_othermonthdays()
+        except Exception:
+            pass
         self.on_date_selected(None)
 
     def on_date_selected(self, event):
