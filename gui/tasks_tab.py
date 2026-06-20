@@ -272,6 +272,17 @@ class TasksTab:
             chat_id = chat_id_entry.get().strip() or None
             estimated_duration = duration_entry.get().strip()
 
+            if reminder_time:
+                from reminders.popup import parse_time
+                normalized_time = parse_time(reminder_time)
+                if not normalized_time:
+                    messagebox.showwarning(
+                        "Validation", 
+                        "Reminder time must be in HH:MM format (e.g. 09:30 or 9:30 PM)."
+                    )
+                    return
+                reminder_time = normalized_time
+
             if not title:
                 messagebox.showwarning("Validation", "Title cannot be blank.")
                 return
